@@ -3,36 +3,56 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const Sidebar = () => {
+export default function Sidebar() {
   const router = useRouter();
 
   const navigation = [
-    { name: 'Report Fetcher', href: '/reports', icon: 'DocumentIcon' },
-    { name: 'UI Enhancements', href: '/ui-enhancements', icon: 'PencilIcon' },
-    { name: 'Integrations', href: '/integrations', icon: 'LinkIcon' },
+    {
+      name: 'Dashboard',
+      href: '/',
+      icon: 'HomeIcon',
+    },
+    {
+      name: 'Business Reports',
+      href: '/reports/business',
+      icon: 'ChartBarIcon',
+    },
+    {
+      name: 'Search Analytics',
+      href: '/reports/search-query',
+      icon: 'SearchIcon',
+    },
+    {
+      name: 'Settings',
+      href: '/settings',
+      icon: 'CogIcon',
+    },
   ];
 
   return (
-    <div className="w-64 bg-gray-100 min-h-screen p-4">
-      <div className="mb-8">
-        <h2 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-          TOOLS
-        </h2>
-        {navigation.map((item) => (
-          <Link
-            key={item.name}
-            href={item.href}
-            className={`mt-2 flex items-center px-4 py-2 text-sm rounded-lg
-              ${router.pathname === item.href 
-                ? 'bg-red-100 text-red-600' 
-                : 'text-gray-700 hover:bg-gray-200'}`}
-          >
-            {item.name}
-          </Link>
-        ))}
-      </div>
+    <div className="w-64 min-h-screen bg-gray-50 border-r">
+      <nav className="mt-5 px-2">
+        <div className="space-y-1">
+          {navigation.map((item) => {
+            const isActive = router.pathname === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`
+                  group flex items-center px-2 py-2 text-sm font-medium rounded-md
+                  ${isActive
+                    ? 'bg-gray-100 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }
+                `}
+              >
+                <span className="truncate">{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
-};
-
-export default Sidebar;
+}
